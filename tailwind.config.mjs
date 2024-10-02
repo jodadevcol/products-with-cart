@@ -35,7 +35,9 @@ export default {
         green: '#1EA575'
       },
       boxShadow: {
-        'inner-rose': 'inset 0 0 1px 1px rgb(173,138,133)'
+        'inner-rose': 'inset 0 0 1px 1px rgb(173,138,133)',
+        red: '0 0 0 2.5px rgb(199 59 15)',
+        'inner-white': 'inset 0 0 1px 1px rgb(255,255,255)'
       }
     }
   },
