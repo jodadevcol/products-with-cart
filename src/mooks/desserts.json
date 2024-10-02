@@ -1,6 +1,7 @@
 {
   "desserts": [
     {
+      "id": "aa407357-70e7-467d-a8b8-021c5bfc2eea",
       "image": {
         "thumbnail": "/images/desserts/image-waffle-thumbnail.jpg",
         "mobile": "/images/desserts/image-waffle-mobile.jpg",
@@ -12,6 +13,7 @@
       "price": 6.5
     },
     {
+      "id": "9ab175fb-fc7f-4cc3-85b9-98ecda37a755",
       "image": {
         "thumbnail": "/images/desserts/image-creme-brulee-thumbnail.jpg",
         "mobile": "/images/desserts/image-creme-brulee-mobile.jpg",
@@ -23,6 +25,7 @@
       "price": 7.0
     },
     {
+      "id": "8da205b7-45c6-447c-80c5-d8f6577117bc",
       "image": {
         "thumbnail": "/images/desserts/image-macaron-thumbnail.jpg",
         "mobile": "/images/desserts/image-macaron-mobile.jpg",
@@ -34,6 +37,7 @@
       "price": 8.0
     },
     {
+      "id": "edc8ecd8-affc-4e76-bd82-73fea0ccc9ec",
       "image": {
         "thumbnail": "/images/desserts/image-tiramisu-thumbnail.jpg",
         "mobile": "/images/desserts/image-tiramisu-mobile.jpg",
@@ -45,6 +49,7 @@
       "price": 5.5
     },
     {
+      "id": "a753584b-c3f5-4b64-923b-09f7749e8e7e",
       "image": {
         "thumbnail": "/images/desserts/image-baklava-thumbnail.jpg",
         "mobile": "/images/desserts/image-baklava-mobile.jpg",
@@ -56,6 +61,7 @@
       "price": 4.0
     },
     {
+      "id": "5c9a0cbe-43f3-4e35-9b90-d474ed30680f",
       "image": {
         "thumbnail": "/images/desserts/image-meringue-thumbnail.jpg",
         "mobile": "/images/desserts/image-meringue-mobile.jpg",
@@ -67,6 +73,7 @@
       "price": 5.0
     },
     {
+      "id": "ff172ef5-ee64-4725-b916-d8811340c144",
       "image": {
         "thumbnail": "/images/desserts/image-cake-thumbnail.jpg",
         "mobile": "/images/desserts/image-cake-mobile.jpg",
@@ -78,6 +85,7 @@
       "price": 4.5
     },
     {
+      "id": "3cd0907a-d341-4163-ad43-d07b7fcc1536",
       "image": {
         "thumbnail": "/images/desserts/image-brownie-thumbnail.jpg",
         "mobile": "/images/desserts/image-brownie-mobile.jpg",
@@ -89,6 +97,7 @@
       "price": 4.5
     },
     {
+      "id": "d8fec4b1-102d-45c5-82a9-4654efa6f635",
       "image": {
         "thumbnail": "/images/desserts/image-panna-cotta-thumbnail.jpg",
         "mobile": "/images/desserts/image-panna-cotta-mobile.jpg",
