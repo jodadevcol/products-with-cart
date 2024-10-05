@@ -7,6 +7,9 @@ import react from '@astrojs/react'
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'hybrid',
+  output: 'server',
+  experimental: {
+    serverIslands: true
+  },
   integrations: [tailwind(), react()]
 })
