@@ -1,7 +1,12 @@
 import { map } from 'nanostores'
 import type { ItemCart, ItemToRemove, ItemToRemoveToCart } from '../types/cart'
+import { useStore } from '@nanostores/react'
 
 const cartItems = map<Record<string, ItemCart>>({})
+
+function checkItemInCart(id: string) {
+  return useStore(cartItems).hasOwnProperty(id)
+}
 
 function addItemToCart({ id, name, price, quantity }: ItemCart) {
   cartItems.set({
@@ -15,9 +20,13 @@ function removeItemToCart({ id, quantity }: ItemToRemoveToCart) {
 
   if (!availableItem) return
 
-  if (availableItem.quantity === 1) {
+  console.log(availableItem.quantity)
+
+  if (availableItem.quantity <= 1) {
     const { [id]: _, ...newCartItems } = cartItems.get()
     cartItems.set(newCartItems)
+
+    return
   }
 
   cartItems.set({
@@ -35,4 +44,4 @@ function removeItem({ id }: ItemToRemove) {
   cartItems.set(newCartItems)
 }
 
-export { cartItems, addItemToCart, removeItemToCart, removeItem }
+export { cartItems, addItemToCart, removeItemToCart, removeItem, checkItemInCart }

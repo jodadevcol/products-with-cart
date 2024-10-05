@@ -1,0 +1,32 @@
+---
+import ProductHeader from './ProductHeader.astro';
+import ProductsList from './ProductsList.tsx';
+---
+
+<article class="space-y-8">
+  <ProductHeader title='Desserts' />
+
+  <div>
+    <ProductsList server:defer client:load>
+      <ul class='grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(180px,250px))] gap-x-6 gap-y-8 animate-pulse'>
+        <li>
+          <article class=''>
+            <header class='relative mb-10'>
+              <div class='relative flex w-full h-full max-h-60 rounded-lg overflow-hidden transition-shadow ease-linear duration-200 bg-gray-200'></div>
+              <div class='absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[22px] w-full max-w-40'>
+                <div class='relative w-full max-w-full overflow-hidden rounded-full h-11 transition-colors ease-in duration-300'>
+                  <div class='h-8 bg-gray-200 rounded w-1/2'></div>
+                </div>
+              </div>
+            </header>
+            <footer class=''>
+              <div class='h-6 bg-gray-200 rounded mt-2'></div>
+              <div class='h-6 bg-gray-200 rounded w-2/3 mt-2'></div>
+              <div class='h-6 bg-gray-200 rounded w-1/3 mt-2'></div>
+            </footer>
+          </article>
+        </li>
+      </ul>
+    </ProductsList>
+  </div>
+</article>

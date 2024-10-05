@@ -1,61 +1,44 @@
 import clsx from 'clsx'
-import { useState, type MouseEventHandler } from 'react'
+import { useEffect, useState, type MouseEventHandler } from 'react'
 import type { Product } from '../../types/product'
-import { addItemToCart, removeItemToCart } from '../../store/cart'
+import { addItemToCart, cartItems, checkItemInCart, removeItemToCart } from '../../store/cart'
 import { setCurrency } from '../../tools'
 
-interface ActionsCart {
-  type: string
-  payload: (currentCount: number) => number
-}
-
 function ProductCard({ product }: { product: Product }) {
-  const [inCart, setInCart] = useState({
-    in: false,
-    count: 0
-  })
   const { id, name, price, category, image } = product
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    const target = event.currentTarget
-    const increment = target.dataset.increment !== undefined ? 'INCREMENT' : 'DECREMENT'
-    const limits = increment === 'INCREMENT' ? 10 : 0
-    const ACTIONS_ADD_TO_CART: ActionsCart[] = [
-      {
-        type: 'INCREMENT',
-        payload: (currentCount: number) => {
-          if (currentCount >= limits) return currentCount
-          return currentCount + 1
-        }
-      },
-      {
-        type: 'DECREMENT',
-        payload: (currentCount: number) => {
-          if (currentCount <= limits) return currentCount
-          return currentCount - 1
-        }
-      }
-    ]
-
-    setInCart((prev) => {
-      const action = ACTIONS_ADD_TO_CART.find((action) => action.type === increment)
-      const count = action?.payload ? action?.payload(prev.count) : prev.count
-      const hasItems = count > 0 ? true : false
-
-      if (increment === 'DECREMENT') removeItemToCart({ id, quantity: count })
-      if (increment === 'INCREMENT') addItemToCart({ id, name, price, quantity: count })
-
-      return {
-        in: hasItems,
-        count
-      }
-    })
+  const handleClickNeautral: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault()
+    addItemToCart({ id, name, price, quantity: 1 })
   }
+
+  const handleClickIncrement: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault()
+    // const newCount = prevState.count >= 10 ? prevState.count : prevState.count + 1
+    // addItemToCart({ id, name, price, quantity: newCount })
+  }
+
+  const handleClickDecrement: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault()
+
+    // const newCount = prevState.count <= 0 ? prevState.count : prevState.count - 1
+    // removeItemToCart({ id, quantity: newCount })
+  }
+
+  useEffect(() => {
+    const unSubscribe = cartItems.subscribe((items) => {
+      const item = items[id]
+
+      console.log(items)
+    })
+
+    return () => unSubscribe()
+  }, [])
 
   return (
     <article className=''>
       <header className='relative mb-10'>
-        <picture className={clsx('relative flex w-full h-full max-h-60 rounded-lg overflow-hidden transition-shadow ease-linear duration-200', inCart.in ? 'shadow-red' : 'shadow-none')}>
+        <picture className={clsx('relative flex w-full h-full max-h-60 rounded-lg overflow-hidden transition-shadow ease-linear duration-200', false ? 'shadow-red' : 'shadow-none')}>
           <img className='size-full object-cover max-h-full aspect-square' src={image.desktop} alt='' />
         </picture>
 
@@ -63,16 +46,16 @@ function ProductCard({ product }: { product: Product }) {
           <div
             className={clsx(
               'relative w-full max-w-full overflow-hidden rounded-full h-11 transition-colors ease-in duration-300',
-              inCart.in ? ' text-white bg-red' : 'text-red bg-white shadow-inner-rose'
+              false ? ' text-white bg-red' : 'text-red bg-white shadow-inner-rose'
             )}
           >
             <div
               className={clsx(
                 'absolute inset-0 transition-opacity ease-in-out',
-                !inCart.in ? 'delay-300 duration-500 opacity-100 pointer-events-auto visible' : 'duration-300 opacity-0 pointer-events-none invisible *:pointer-events-none'
+                !false ? 'delay-300 duration-500 opacity-100 pointer-events-auto visible' : 'duration-300 opacity-0 pointer-events-none invisible *:pointer-events-none'
               )}
             >
-              <button className='flex items-center justify-center gap-x-2 w-full max-w-full rounded-full py-3 px-3' onClick={handleClick} data-increment>
+              <button className='flex items-center justify-center gap-x-2 w-full max-w-full rounded-full py-3 px-3' onClick={handleClickNeautral} data-increment>
                 <div className='size-5'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='21' height='20' fill='none' viewBox='0 0 21 20' className='size-full'>
                     <g fill='currentColor' clipPath='url(#a)'>
@@ -87,18 +70,18 @@ function ProductCard({ product }: { product: Product }) {
                   </svg>
                 </div>
 
-                <span className={clsx(' whitespace-nowrap text-sm font-semibold', inCart.in ? 'text-white' : 'text-rose-900')}>Add to Cart</span>
+                <span className={clsx(' whitespace-nowrap text-sm font-semibold', false ? 'text-white' : 'text-rose-900')}>Add to Cart</span>
               </button>
             </div>
 
             <div
               className={clsx(
                 'absolute inset-0 transition-opacity ease-in-out',
-                inCart.in ? 'delay-300 duration-500 opacity-100 pointer-events-auto visible' : 'duration-300 opacity-0 pointer-events-none invisible *:pointer-events-none'
+                false ? 'delay-300 duration-500 opacity-100 pointer-events-auto visible' : 'duration-300 opacity-0 pointer-events-none invisible *:pointer-events-none'
               )}
             >
               <div className='flex items-center justify-between gap-x-2 w-full max-w-full rounded-full py-3 px-3'>
-                <button className='rounded-full shadow-inner-white size-5' onClick={handleClick} data-decrement>
+                <button className='rounded-full shadow-inner-white size-5' onClick={handleClickDecrement} data-decrement>
                   <span className='flex items-center justify-center size-full'>
                     <svg xmlns='http://www.w3.org/2000/svg' width='10' height='2' fill='none' viewBox='0 0 10 2'>
                       <path fill='currentColor' d='M0 .375h10v1.25H0V.375Z' />
@@ -106,11 +89,11 @@ function ProductCard({ product }: { product: Product }) {
                   </span>
                 </button>
 
-                <span className='text-sm font-bold'>{inCart.count}</span>
+                <span className='text-sm font-bold'>{0}</span>
 
                 <button
-                  className={clsx('rounded-full shadow-inner-white size-5', inCart.count === 10 ? 'opacity-50 pointer-events-none' : 'opacity-100 pointer-events-auto')}
-                  onClick={handleClick}
+                  className={clsx('rounded-full shadow-inner-white size-5', 10 === 10 ? 'opacity-50 pointer-events-none' : 'opacity-100 pointer-events-auto')}
+                  onClick={handleClickIncrement}
                   data-increment
                 >
                   <span className='flex items-center justify-center size-full'>
